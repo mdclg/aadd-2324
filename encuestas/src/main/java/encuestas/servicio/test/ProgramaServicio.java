@@ -8,7 +8,7 @@ import encuestas.servicio.EncuestaResumen;
 import encuestas.servicio.IServicioEncuestas;
 import servicio.FactoriaServicios;
 
-public class Programa {
+public class ProgramaServicio {
 
 	public static void main(String[] args) throws Exception {
 
@@ -40,6 +40,7 @@ public class Programa {
 			if (! resumen.getId().equals(id))
 				servicio.eliminar(resumen.getId());
 		}
+		
 		
 		System.out.println("fin.");
 
