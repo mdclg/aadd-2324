@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -13,15 +14,21 @@ import javax.persistence.Table;
 
 import repositorio.Identificable;
 
-
+@Entity
+@Table(name="revista")
 public class Revista implements Identificable{
 
-	
+	@Id
 	private String id; //El id será el ISSN de la revista
+	@Column(name="nombre")
 	private String nombre;
+	@Lob
+	@Column(name="descripcion")
 	private String descripcion;
+	@Column(name = "fecha_fundacion", columnDefinition = "DATE")
 	private LocalDate fechaFundacion;
 	
+	@OneToMany(mappedBy = "revista", cascade = CascadeType.ALL)
 	private ArrayList<Edicion> ediciones;
 	
 	
@@ -81,11 +88,8 @@ public class Revista implements Identificable{
 	
 	public void addEdicion(Integer volumen, LocalDate fechaEdicion, LocalDate fechaFinEnvios, List<String[]> temasTexto) {
 		
-		ArrayList<Tema> temas = new ArrayList<Tema>();
-		for(String[] t:temasTexto) {
-			temas.add( new Tema(t[0], t[1]));
-		}
-		Edicion edicion = new Edicion(volumen,fechaEdicion,fechaFinEnvios,this,temas);
+		
+		Edicion edicion = new Edicion(volumen,fechaEdicion,fechaFinEnvios,this,temasTexto);
 		
 		if(ediciones == null) {
 			ediciones = new ArrayList<Edicion>();
