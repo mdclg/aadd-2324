@@ -14,25 +14,39 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-
+@Entity
+@Table(name="editorial")
 public class Editorial implements Serializable{
 
    
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private Integer id;
+	@Column(name="nombre")
     private String nombre; 
-    private LocalDate fechaFundacion;   
+	@Column(name="fecha_fundacion", columnDefinition = "DATE")
+    private LocalDate fechaFundacion;  
+	@CollectionTable(name="generos")
     private List<String> generos; 
+	@Transient
     private long anyos;
     
+	@OneToMany(mappedBy = "editorial")
     private ArrayList<Empleado> empleados;
+	
+	@OneToOne
     private Empleado director;
+    
+    private List<Distribuidor> distribuidores;
    
 
     public long getAnyos() {
-        LocalDate.now();
         return ChronoUnit.YEARS.between(fechaFundacion, LocalDate.now());
     }
 
@@ -101,7 +115,10 @@ public class Editorial implements Serializable{
 		this.director = director;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Editorial [ID=" + id + ", nombre=" + nombre + "]";
+	}
     
 
 }

@@ -58,4 +58,5 @@ public class Revista implements Serializable{
 	}
 
 	
+	
 }
