@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import repositorio.Identificable;
 
+
 @Entity
 @Table(name="revista")
 public class Revista implements Identificable{
@@ -96,6 +97,12 @@ public class Revista implements Identificable{
 		}
 		ediciones.add(edicion);
 	}
+	
+	@Override
+	public String toString() {
+		return "Revista [ISSN=" + id + ", nombre=" + nombre + "]";
+	}
+	
 	
 	
 }

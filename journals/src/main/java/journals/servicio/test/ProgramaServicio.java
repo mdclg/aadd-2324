@@ -24,7 +24,7 @@ public class ProgramaServicio {
 	public static void main(String[] args) throws Exception {
 		
 		IServicioJournal servicio = FactoriaServicios.getServicio(IServicioJournal.class);
-		String id = servicio.crear("223-234-5567", "Nature", "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", LocalDate.now());
+		String id = servicio.crear("223-234-55678", "Nature8", "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", LocalDate.now());
 		
 		
 		String [] tema = new String[2];
