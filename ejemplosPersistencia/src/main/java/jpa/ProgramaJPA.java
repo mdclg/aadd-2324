@@ -72,7 +72,9 @@ public class ProgramaJPA {
 			empleadoDirector.setEditorial(editorial); // el empleado trabaja en la editorial
 			em.persist(empleadoDirector);
 			em.flush();
+			editorial.setNombre("loquesea");
 			editorial.setDirector(empleadoDirector);
+			
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -278,8 +280,9 @@ public class ProgramaJPA {
 	}
 
 	public static void main(String[] args) {
-		crearEditorial();
-
+		//crearDirector();
+		//crearEmpleados();
+		cicloVidaEntidad();
 	}
 
 }

@@ -14,6 +14,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,7 +34,8 @@ public class Editorial implements Serializable{
 	@Column(name="nombre")
     private String nombre; 
 	@Column(name="fecha_fundacion", columnDefinition = "DATE")
-    private LocalDate fechaFundacion;  
+    private LocalDate fechaFundacion; 
+	@ElementCollection
 	@CollectionTable(name="generos")
     private List<String> generos; 
 	@Transient
@@ -43,6 +47,10 @@ public class Editorial implements Serializable{
 	@OneToOne
     private Empleado director;
     
+	@ManyToMany
+	@JoinTable(name="editorial_distribuidor", joinColumns = {
+			@JoinColumn(name="editorial")}, inverseJoinColumns = {
+					@JoinColumn(name="distribuidor")})
     private List<Distribuidor> distribuidores;
    
 

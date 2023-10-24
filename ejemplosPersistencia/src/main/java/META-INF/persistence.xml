@@ -9,11 +9,11 @@
         <properties>
             <property name="javax.persistence.jdbc.driver"
                 value="com.mysql.cj.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.user" value="admin" />
             <property name="javax.persistence.jdbc.password"
-                value="practicas" />
+                value="aadd2023" />
             <property name="javax.persistence.jdbc.url"
-                value="jdbc:mysql://localhost:3306/editoriales?serverTimezone=CET" />
+                value="jdbc:mysql://aaddprueba.cdcimoihjvnz.us-east-1.rds.amazonaws.com:3306/editoriales?serverTimezone=CET" />
             <property name="eclipselink.ddl-generation"
                 value="create-or-extend-tables" />
             <property name="eclipselink.query-results-cache"
