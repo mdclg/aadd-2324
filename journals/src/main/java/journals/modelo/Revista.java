@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,6 +19,10 @@ import repositorio.Identificable;
 
 @Entity
 @Table(name="revista")
+@NamedQueries({
+	@NamedQuery(name="Revista.getByname", query="SELECT r FROM Revista r WHERE r.nombre LIKE :keyword "),
+	@NamedQuery(name="Revista.getByAceptaEnvios",query=" SELECT DISTINCT r FROM Revista r, r.ediciones e WHERE e.fechaFinEnvios > :fecha " )
+})
 public class Revista implements Identificable{
 
 	@Id

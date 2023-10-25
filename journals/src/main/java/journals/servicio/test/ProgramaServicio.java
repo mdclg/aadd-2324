@@ -24,7 +24,7 @@ public class ProgramaServicio {
 	public static void main(String[] args) throws Exception {
 		
 		IServicioJournal servicio = FactoriaServicios.getServicio(IServicioJournal.class);
-		String id = servicio.crear("223-234-55678", "Nature8", "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", LocalDate.now());
+		String id = servicio.crear("223-234-55678911", "Nature", "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", LocalDate.now());
 		
 		
 		String [] tema = new String[2];
@@ -35,7 +35,7 @@ public class ProgramaServicio {
 		tema2[0] = "Ciencias de la energía";
 		tema2[1] = "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?";
 		
-		servicio.addEdicion("223-234-5567", 230,parseDate("01/03/2024"), parseDate("01/12/2023"), Arrays.asList(tema, tema2 ));		
+		servicio.addEdicion("223-234-55678911", 230,parseDate("01/03/2024"), parseDate("01/12/2023"), Arrays.asList(tema, tema2 ));		
 		
 
 	}
