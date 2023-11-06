@@ -4,16 +4,25 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.bson.types.ObjectId;
+import org.bson.BsonType;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.codecs.pojo.annotations.BsonRepresentation;
+
+import repositorio.Identificable;
 
 
-public class Editorial implements Serializable{
+public class Editorial implements Serializable, Identificable{
 
-	
-    private ObjectId id;
+	@BsonId
+	@BsonRepresentation(BsonType.OBJECT_ID) 
+    private String id;
     private String nombre; 
+	@BsonProperty(value="fecha_fundacion")
     private LocalDate fechaFundacion; 
+	@BsonProperty(value="editor_jefe")
     private String editorJefe;
+	@BsonProperty(value="paises_publicacion")
     private List<String> paisesPublicacion; 
 	
     private Direccion sede;
@@ -35,7 +44,7 @@ public class Editorial implements Serializable{
     
 
 
-	public ObjectId getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -43,7 +52,7 @@ public class Editorial implements Serializable{
 
 
 
-	public void setId(ObjectId id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

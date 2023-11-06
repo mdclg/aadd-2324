@@ -1,10 +1,12 @@
 package journals.modelo;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
 public class Direccion {
 	private String calle;
 	private Integer numero;
 	private String ciudad;
+	@BsonProperty(value="codigo_postal")
 	private String codigoPostal;
 
 	public Direccion() {
