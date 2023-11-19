@@ -34,9 +34,9 @@ public class ServletCookie extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<html><body><B> Usted se identifico anteriormente como ");
-		out.print(request.getAttribute("usuario") + "</B></body></html>");
+        PrintWriter out = response.getWriter();
+        out.println("<html><body><B> Usted se identifico anteriormente como ");
+        out.print(request.getAttribute("usuario") + "</B></body></html>");
 	}
 
 }

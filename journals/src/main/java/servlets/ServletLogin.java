@@ -38,6 +38,7 @@ public class ServletLogin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html");
+		
 		Cookie[] cookies = request.getCookies();
 		Cookie cookieAADD = null;
 		if (cookies != null) {
@@ -49,17 +50,12 @@ public class ServletLogin extends HttpServlet {
 		    }
 		    // Damos la salida en texto normal
 		    if (cookieAADD != null) {
-		    	// Extraigo el valor de la cookie
-		        String usuario = cookieAADD.getValue();
-		        // Añade un atributo a la petición
+		    	String usuario = cookieAADD.getValue();
 		        request.setAttribute("usuario", usuario);
-		        // Conseguimos la referencia al contexto de la aplicación
-		        // para crear un request dispatcher
 		        ServletContext app = getServletConfig().getServletContext();
 		        RequestDispatcher rd = app.getNamedDispatcher("ServletCookie");
 		        // Reenviamos la petición capturando cualquier excepción que se produzca
 		        try {
-		            // Semántica forward
 		            rd.include(request, response);
 		            return;
 		        } catch (Exception e) {
@@ -67,6 +63,7 @@ public class ServletLogin extends HttpServlet {
 		        }
 		    }
 		}
+		
 		PrintWriter out = response.getWriter();
 		// Obtenemos la ruta física el fichero del formulario
 		String pathFichero = getServletConfig().getServletContext().getRealPath("login.html");
@@ -90,7 +87,6 @@ public class ServletLogin extends HttpServlet {
 		// Obtenemos el número de identificaciones fallidas
 		Integer numFallos = (Integer) sesion.getAttribute("fallos");
 		if (numFallos == null) {
-			// No se ha identificado
 			numFallos = 0;
 			sesion.setAttribute("fallos", numFallos);
 		} else if (numFallos.intValue() == 3) {
@@ -98,7 +94,7 @@ public class ServletLogin extends HttpServlet {
 			out.println("Número fallos identificación excedido");
 			return;
 		}
-		// Obtenemos la información de la petición
+
 		String usuario = request.getParameter("username");
 		String clave = request.getParameter("clave");
 		// Obtenemos el objeto ServletContext
@@ -106,15 +102,14 @@ public class ServletLogin extends HttpServlet {
 		// Accedemos a la referencia de la tabla hash
 		HashMap<String, Cliente> usuariosHash = (HashMap<String, Cliente>) app.getAttribute("usuarios");
 		Cliente c = null;
-		if (usuariosHash == null) { // No hay usuarios registrados
+		if (usuariosHash == null) {
 			identificado = false;
 		} else {
 			// Obtenemos el objeto cliente por usuario
 			c = (Cliente) usuariosHash.get(usuario);
-			if (c == null) { // No está registrado
+			if (c == null) {
 				identificado = false;
 			} else {
-				// Comprobamos la clave
 				if (c.getPassword().equals(clave)) {
 					identificado = true;
 				} else {
@@ -122,28 +117,30 @@ public class ServletLogin extends HttpServlet {
 				}
 			}
 		}
+
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println("<html><head><title>Login</title></head><body>");
+		out.println("<html> <head> <title> Login </title> </head> <body>");
 		if (identificado) {
-		    // Enviamos una cookie al navegador web
-		    Cookie cookie = new Cookie("aadd", c.getUsername());
+			Cookie cookie = new Cookie("aadd", c.getUsername());
 		    cookie.setMaxAge(60 * 60 * 24 * 7); // Cálculo segundos semana
 		    response.addCookie(cookie);
-		    out.println("<B><P>Identificación correcta</B></P>");
-		} else {
-		    out.println("<B><P>Error de identificación</P></B>");
+			out.println("<B><P>Identificación correcta</B></P>");
 		}
-		out.println("</body></html>");
+		else {
+			out.println("<B><P>Error de identificación</B></P>");
+		}
+		out.println("</body>");
+		out.println("</html>");
 		if (identificado) {
-		    // Guardamos el objeto usuario en la sesión
-		    sesion.setAttribute("usuario", c);
-		    // Reseteamos número fallos
-		    sesion.setAttribute("fallos", 0);
+			// Guardamos el objeto usuario en la sesión
+			sesion.setAttribute("usuario", c);
+			// Reseteamos número fallos
+			sesion.setAttribute("fallos", 0);
 		} else {
-		    // Incrementamos el número de fallos
-		    int fallos = ((Integer) sesion.getAttribute("fallos")).intValue();
-		    sesion.setAttribute("fallos", ++fallos);
+			// Incrementamos el número de fallos
+			int fallos = ((Integer) sesion.getAttribute("fallos")).intValue();
+			sesion.setAttribute("fallos", ++fallos);
 		}
 	}
 

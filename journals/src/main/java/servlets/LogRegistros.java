@@ -35,8 +35,11 @@ public class LogRegistros extends HttpFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		
 		System.out.println("Intento de Registro del usuario: " + request.getParameter("username"));
+		
 		chain.doFilter(request, response);
+		
 		System.out.println("Resultado del registro. Codigo: " + ((HttpServletResponse) response).getStatus());
 	}
 
