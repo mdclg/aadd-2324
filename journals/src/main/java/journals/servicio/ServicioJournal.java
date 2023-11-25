@@ -3,11 +3,13 @@ package journals.servicio;
 import java.time.LocalDate;
 import java.util.List;
 
+import journals.dto.RevistaDTO;
 import journals.modelo.Revista;
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
+import servicio.ServicioException;
 
 public class ServicioJournal implements IServicioJournal {
 
@@ -17,7 +19,7 @@ public class ServicioJournal implements IServicioJournal {
 	public String crear(String id, String nombre, String descripcion, LocalDate fechaFundacion)
 			throws RepositorioException {
 		if (id == null || id.isEmpty())
-			throw new IllegalArgumentException("ISSN: no debe ser nulo ni vacio");
+			throw new IllegalArgumentException("issnaviso");
 
 		if (nombre == null || nombre.isEmpty())
 			throw new IllegalArgumentException("nombre: no debe ser nula");
@@ -55,6 +57,26 @@ public class ServicioJournal implements IServicioJournal {
 		}
 		repositorio.update(revista);
 
+	}
+	
+	private RevistaDTO transformToDTO(Revista revista) {
+        
+        return new RevistaDTO(revista.getId(),revista.getNombre(), revista.getDescripcion(), revista.getFechaFundacion());
+    }
+
+	@Override
+	public RevistaDTO getByIssn(String issn) throws ServicioException{
+		try {
+			Revista revista = repositorio.getById(issn);
+			return transformToDTO(revista);
+		} catch (RepositorioException e) {
+			e.printStackTrace();
+			throw new ServicioException(e.getMessage(), e);
+			
+		} catch (EntidadNoEncontrada e) {
+			e.printStackTrace();
+			throw new ServicioException(e.getMessage(), e);
+		}
 	}
 
 }
