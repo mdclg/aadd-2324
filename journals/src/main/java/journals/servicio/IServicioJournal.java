@@ -15,5 +15,6 @@ public interface IServicioJournal {
 	void addEdicion(String issn, Integer volumen, LocalDate fechaEdicion, LocalDate fechaFinEnvios, List<String[]> temas) throws RepositorioException, EntidadNoEncontrada;
 	
 	RevistaDTO getByIssn(String issn) throws ServicioException;
+
 	
 }

@@ -1,26 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html lang="#{view.locale.toLanguageTag()}"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-	<f:view locale="#{activeLocale.actual}">
-	
+
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+    xmlns:f="http://java.sun.com/jsf/core">
+
 <h:head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Detalle revista</title>
+
+    <meta charset="utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Detalle revista</title>
+
 </h:head>
+
 <h:body>
-	<f:metadata>
-		<f:viewParam name="id" value="#{revistaDetailWeb.idRevista}" />
-		<f:viewAction action="#{revistaDetailWeb.load()}" />
-	</f:metadata>
-	<div>
-	<h:messages id="errors" infoStyle="color:blue"
-					warnStyle="color:orange" errorStyle="color:red" showDetail="true" />
-	<h3>"#{text['nombre']}" (#{revistaDetailWeb.revista.issn}) #{revistaDetailWeb.revista.nombre}</h3>
-	<p>#{revistaDetailWeb.revista.descripcion}</p>
-		
-	</div>
+
+    <f:metadata>
+
+        <f:viewParam name="id" value="#{revistaDetailWeb.idRevista}" />
+
+        <f:viewAction action="#{revistaDetailWeb.load()}" />
+
+    </f:metadata>
+
+    <div>
+
+    <h:messages id="errors" infoStyle="color:blue"
+
+                    warnStyle="color:orange" errorStyle="color:red" showDetail="true" />
+
+    <h3> (#{revistaDetailWeb.revista.issn}) #{revistaDetailWeb.revista.nombre}</h3>
+
+    <p>#{revistaDetailWeb.revista.descripcion}</p>
+
+        
+
+    </div>
+
 </h:body>
-</f:view>
+
 </html>

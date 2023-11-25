@@ -79,4 +79,5 @@ public class ServicioJournal implements IServicioJournal {
 		}
 	}
 
+
 }
