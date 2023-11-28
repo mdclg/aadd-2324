@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+<title>Ver libro</title>
+</h:head>
+<f:metadata>
+	<f:viewParam name="id" value="#{libroWeb.id}" />
+	<f:viewAction action="#{libroWeb.buscarLibro}" />
+</f:metadata>
+<h:body>
+
+	<h1>Ver libro</h1>
+	<hr />
+	<h:form>
+	<h:commandButton value="Crear nuevo libro"
+			actionListener="#{libroWeb.goToCrear()}" />
+	</h:form>
+			Este libro tiene el ISBN: #{libroWeb.libro.isbn}
+	<h:panelGrid columns="2">
+	
+		<h:outputLabel value="ISBN: " />
+		<h:outputText value="#{libroWeb.libro.isbn}" />
+		<h:outputText value="Título:" />
+		<h:outputText value="#{libroWeb.libro.titulo}" />
+		<h:outputLabel value="Precio: " />
+		<h:outputText value="#{libroWeb.libro.precio}" />
+		<h:outputLabel value="Número de páginas: " />
+		<h:outputText value="#{libroWeb.libro.numPaginas}" />
+		<h:outputLabel value="Formato: " />
+		<h:outputText value="#{libroWeb.libro.formato}" />
+		<h:outputLabel value="Fecha de publicación: " />
+		<h:outputText value="#{libroWeb.libro.fechaPublicacion}">
+		<f:convertDateTime pattern="dd-MM-yyyy" />
+		</h:outputText>
+	</h:panelGrid>
+</h:body>
+</html>

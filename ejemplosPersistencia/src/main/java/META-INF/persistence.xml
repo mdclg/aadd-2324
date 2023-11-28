@@ -5,6 +5,7 @@
         <class>editorial.modelo.Editorial</class>
         <class>editorial.modelo.Empleado</class>
         <class>editorial.modelo.Distribuidor</class>
+        <class>editorial.modelo.Libro</class>
         
         <properties>
             <property name="javax.persistence.jdbc.driver"
@@ -15,7 +16,7 @@
             <property name="javax.persistence.jdbc.url"
                 value="jdbc:mysql://aaddprueba.cdcimoihjvnz.us-east-1.rds.amazonaws.com:3306/editoriales?serverTimezone=CET" />
             <property name="eclipselink.ddl-generation"
-                value="create-or-extend-tables" />
+				value="create-or-extend-tables" />
             <property name="eclipselink.query-results-cache"
                 value="false" />
             <property name="eclipselink.cache.shared.default"

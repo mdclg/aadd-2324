@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+<title>Crear nuevo libro</title>
+</h:head>
+<h:body>
+	<h1>Crear nuevo libro</h1>
+	<hr />	
+	<h:messages id="errors" infoStyle="color:blue" warnStyle="color:orange"
+		errorStyle="color:red" showDetail="true"/>
+	<h:form id="nuevolibro">
+		<h:panelGrid columns="2">
+			<h:outputLabel value="ISBN: " />
+			<h:inputText value="#{libroConstructor.isbn}" required="true"/>
+			<h:outputLabel value="Título:" />
+			<h:inputText value="#{libroConstructor.titulo}" />
+			<h:outputLabel value="Precio: " />
+			<h:inputText value="#{libroConstructor.precio}" />
+			<h:outputLabel value="Número de páginas: " />
+			<h:inputText value="#{libroConstructor.numPaginas}" />
+			<h:outputLabel value="Formato: " />
+			<h:inputText value="#{libroConstructor.formato}" />
+			<h:outputLabel value="Fecha de publicación: " />
+			<h:inputText value="#{libroConstructor.fecha}">
+				<f:convertDateTime pattern="dd-MM-yyyy" />
+			</h:inputText>
+		</h:panelGrid>
+		<h:commandButton value="Crear nuevo libro"
+			actionListener="#{libroConstructor.crearLibro()}">
+			<f:ajax execute="@form" render=":errors :booklist"/>
+			</h:commandButton>
+			
+	</h:form>
+	<hr />
+	<h1>Lista de libros</h1>
+	<h:dataTable id="booklist" value="#{libroConstructor.libros}"
+		var="libro" border="1">
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Título" />
+			</f:facet>
+			<h:link outcome="verlibro.xhtml?id=#{libro.id}" value="#{libro.titulo}"/>			
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Precio" />
+			</f:facet>
+			<h:outputText value="#{libro.precio}" />
+		</h:column>
+	</h:dataTable>	
+</h:body>
+</html>
