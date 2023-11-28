@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
 
 import editorial.modelo.Libro;
 import utils.EntityManagerHelper;
@@ -55,6 +59,34 @@ public class LibroDAO {
 	public List<Libro> findAllLibros() {
 		EntityManager em = EntityManagerHelper.getEntityManager();
 		return em.createNamedQuery("findAllLibro", Libro.class).getResultList();
+	}
+	
+	public List<Libro> findLibrosByTitulo(String palabraClave) { 
+
+	    try {
+
+	        String queryString = " SELECT l FROM Libro l where l.id is not null ";
+
+	        if (palabraClave != null) {
+	            queryString += " and l.titulo like :palabraClave ";
+	        }
+
+	        Query query = EntityManagerHelper.getEntityManager().createQuery(queryString);
+
+	        if (palabraClave != null) {
+	            query.setParameter("palabraClave", "%" + palabraClave + "%");
+	        }
+
+	        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+
+	        return query.getResultList();
+
+	    } catch (RuntimeException re) {
+
+	        throw re;
+
+	    }
+
 	}
 
 }
