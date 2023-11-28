@@ -1,14 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/WEB-INF/template/basicTemplate.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
-
-<h:head>
-<title>Crear nuevo libro</title>
-</h:head>
-<h:body>
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:aadd="http://xmlns.jcp.org/jsf/composite/componentes/aadd">
+<ui:define name="title">
+	Crear nuevo libro
+</ui:define>
+<ui:define name="content">
 	<h1>Crear nuevo libro</h1>
 	<hr />	
 	<h:messages id="errors" infoStyle="color:blue" warnStyle="color:orange"
@@ -53,5 +52,8 @@
 			<h:outputText value="#{libro.precio}" />
 		</h:column>
 	</h:dataTable>	
-</h:body>
-</html>
+	
+	<aadd:mitabla titulo="Mi table por composicion" 
+	beanRespaldo="#{libroConstructor}" link="verlibro.xhtml"/>
+</ui:define>
+</ui:composition>

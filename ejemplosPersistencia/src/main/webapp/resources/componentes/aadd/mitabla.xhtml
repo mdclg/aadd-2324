@@ -3,22 +3,42 @@
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
 
-    
 
-    <composite:interface>
 
-    </composite:interface>
+<composite:interface>
+	<composite:attribute name="beanRespaldo"
+	 required="true"></composite:attribute>
+	<composite:attribute name="link" required="true" />
+	<composite:attribute name="titulo" required="true" />
+</composite:interface>
 
-    
 
-    <composite:implementation>
-    
 
-    </composite:implementation> 
+<composite:implementation>
+	<h2>#{cc.attrs.titulo}</h2>
+
+	<h:dataTable id="table" var="libro"
+		value="#{cc.attrs.beanRespaldo.libros}">
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Título" />
+			</f:facet>
+			<h:link outcome="#{cc.attrs.link}?id=#{libro.id}"
+				value="#{libro.titulo}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Precio" />
+			</f:facet>
+			<h:outputText value="#{libro.precio}" />
+		</h:column>
+	</h:dataTable>
+
+</composite:implementation>
 
 </html>
