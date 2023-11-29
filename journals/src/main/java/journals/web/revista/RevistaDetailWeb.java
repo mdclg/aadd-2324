@@ -1,6 +1,8 @@
 package journals.web.revista;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -10,6 +12,8 @@ import javax.inject.Named;
 
 import journals.dto.RevistaDTO;
 import journals.servicio.IServicioJournal;
+import repositorio.EntidadNoEncontrada;
+import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
 import servicio.ServicioException;
 
@@ -22,6 +26,12 @@ public class RevistaDetailWeb implements Serializable{
     private IServicioJournal servicioJournals;  
 
     private RevistaDTO revista; 
+    
+    private Integer volumen;
+    
+    private LocalDate fechaEdicion;
+    
+    private LocalDate fechaFinEnvios;
 
     @Inject
 
@@ -50,6 +60,27 @@ public class RevistaDetailWeb implements Serializable{
         }
 
     }
+    
+    public void addEdicion() {
+        try {
+            servicioJournals.addEdicion(revista.getIssn(), volumen, fechaEdicion, fechaFinEnvios, new ArrayList<String[]>() ); 
+            facesContext.addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "","Edición añadida correctamente"));
+            
+            load();
+        } catch (RepositorioException | EntidadNoEncontrada e) {
+
+            facesContext.addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "", e.getMessage()));
+
+            e.printStackTrace();
+        }
+        catch(IllegalArgumentException e) {
+            facesContext.addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "", e.getMessage()));
+            e.printStackTrace();
+        }
+    }
 
 
     public String getIdRevista() {
@@ -70,6 +101,30 @@ public class RevistaDetailWeb implements Serializable{
         return revista;
 
     }
+
+	public Integer getVolumen() {
+		return volumen;
+	}
+
+	public void setVolumen(Integer volumen) {
+		this.volumen = volumen;
+	}
+
+	public LocalDate getFechaEdicion() {
+		return fechaEdicion;
+	}
+
+	public void setFechaEdicion(LocalDate fechaEdicion) {
+		this.fechaEdicion = fechaEdicion;
+	}
+
+	public LocalDate getFechaFinEnvios() {
+		return fechaFinEnvios;
+	}
+
+	public void setFechaFinEnvios(LocalDate fechaFinEnvios) {
+		this.fechaFinEnvios = fechaFinEnvios;
+	}
 
 
 

@@ -1,45 +1,106 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html lang="#{view.locale.toLanguageTag()}"
-
+<ui:composition template="/WEB-INF/template/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
 
-    xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="title">
+        Detalle revista
+    </ui:define>
 
-<h:head>
+    <ui:param name="estilo2" value="current" />
 
-    <meta charset="utf-8" />
+    <ui:define name="metadata">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <f:metadata>
 
-    <title>Detalle revista</title>
+            <f:viewParam name="id" value="#{revistaDetailWeb.idRevista}" />
 
-</h:head>
+            <f:viewAction action="#{revistaDetailWeb.load()}" />
 
-<h:body>
+        </f:metadata>
+    </ui:define>
 
-    <f:metadata>
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="content">
+                    <h:form id="journals">
+                        <p:panel header="#{revistaDetailWeb.revista.issn}">
+                            <h3>#{revistaDetailWeb.revista.nombre}</h3>
+                            <p class="m-0">#{revistaDetailWeb.revista.descripcion}</p>
+                        </p:panel>
 
-        <f:viewParam name="id" value="#{revistaDetailWeb.idRevista}" />
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <p:button value="Volver" href="alta.xhtml"
+                                    style="margin-right:5px" icon="fa fa-arrow-left"></p:button>
+                                <p:commandButton value="Dar de alta nueva edicion"
+                                    icon="fa fa-newspaper" oncomplete="PF('nuevaEdicion').show();"
+                                    update="nuevo"></p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
 
-        <f:viewAction action="#{revistaDetailWeb.load()}" />
 
-    </f:metadata>
+                        <p:dataTable var="edicion" style="prueba"
+                            value="#{revistaDetailWeb.revista.ediciones}" rows="50"
+                            id="tabla_header" paginator="true"
+                            rowsPerPageTemplate="5,10,{ShowAll|'All'}"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <p:column headerText="Volumen">
+                                <h:outputText value="#{edicion.volumen}" />
+                            </p:column>
+                            <p:column headerText="Fecha">
+                                <h:outputText value="#{edicion.fechaFinEnvios}" />
+                            </p:column>
+                            <p:column headerText="Temas">
+                                <ui:repeat value="#{edicion.temas}" var="tema">
+                                    #{tema}<br />
+                                </ui:repeat>
 
-    <div>
+                            </p:column>
 
-    <h:messages id="errors" infoStyle="color:blue"
+                            <p:column style="width: 200px;" headerText="Opciones">
+                            </p:column>
+                        </p:dataTable>
+                        
+                        <p:growl showDetail="true" id="info2" />
 
-                    warnStyle="color:orange" errorStyle="color:red" showDetail="true" />
+                        <p:dialog header="Dar de alta una edicion" modal="true"
+                            widgetVar="nuevaEdicion" width="650">
+                            <p:outputPanel id="nuevo" style="margin: 10px;">
+                                <h:panelGrid columns="2">
+                                
+                                <h:outputText value="Fecha edición"/>
+                <p:datePicker value="#{revistaDetailWeb.fechaEdicion}" locale="es"
+                                monthNavigator="true" pattern="dd-MM-yyyy"/>
+                                
+                                <h:outputText value="Fecha fin de envíos"/>
+                <p:datePicker value="#{revistaDetailWeb.fechaFinEnvios}" locale="es"
+                                monthNavigator="true" pattern="dd-MM-yyyy"/>
 
-    <h3> (#{revistaDetailWeb.revista.issn}) #{revistaDetailWeb.revista.nombre}</h3>
-
-    <p>#{revistaDetailWeb.revista.descripcion}</p>
-
-        
-
-    </div>
-
-</h:body>
-
-</html>
+                                    <h:outputText value="Volumen" />
+                                    <p:inputNumber value="#{revistaDetailWeb.volumen}"
+                                        decimalPlaces="0" />
+                                    <p:commandButton value="Cerrar"
+                                        onclick="PF('nuevaEdicion').hide();" />
+                                    <p:commandButton value="Crear edicion" icon="fa fa-newspaper"
+                                        actionListener="#{revistaDetailWeb.addEdicion()}"
+                                        oncomplete="PF('nuevaEdicion').hide();"
+                                        update="tabla_header info2" />
+                                </h:panelGrid>
+                                <p:ajaxStatus>
+                                    <f:facet name="start">
+                                        <i class="pi pi-spin pi-spinner loading-icon"
+                                            aria-hidden="true"></i>
+                                    </f:facet>
+                                </p:ajaxStatus>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

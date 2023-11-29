@@ -1,70 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/template/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:param name="estilo2" value="current" />
 
-<html xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-<f:view locale="#{activeLocale.actual}">
-<h:head>
+    <ui:define name="title">
+        Alta nueva revista
+    </ui:define>
 
-	<meta charset="utf-8" />
-
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-	<title>Alta nueva revista</title>
-</h:head>
-
-<h:body>
-	<h:form>
-		<h:selectOneMenu value="#{activeLocale.languageTag}">
-			<f:selectItems value="#{activeLocale.localesDisponibles}" var="l"
-				itemValue="#{l.toLanguageTag()}"
-				itemLabel="#{l.getDisplayLanguage(l)}">
-			</f:selectItems>
-			<f:ajax listener="#{activeLocale.reload()}" />
-		</h:selectOneMenu>
-
-	</h:form>
-
-	<div>
-
-		<h:form>
-
-			<h:panelGrid columns="2">
-
-				<h:outputText value="ISSN"></h:outputText>
-
-				<h:inputText id="issn" value="#{altaRevistaWeb.issn}" />
-
-				<h:outputText value="#{text['nombre']}"></h:outputText>
-
-				<h:inputText id="nombre" value="#{altaRevistaWeb.nombre}" />
-
-				<h:outputText value="#{text['descripcion']}"></h:outputText>
-
-				<h:inputTextarea value="#{altaRevistaWeb.descripcion}" rows="5"></h:inputTextarea>
-
-				<h:outputText value="Fecha de fundación"></h:outputText>
-
-				<h:inputText value="#{altaRevistaWeb.fechaFundacion}">
-
-					<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-
-				</h:inputText>
-
-
-			</h:panelGrid>
-
-
-			<h:commandButton value="Alta"
-				actionListener="#{altaRevistaWeb.altaRevista()}">
-
-			</h:commandButton>
-			<h:messages id="errors" infoStyle="color:blue"
-				warnStyle="color:orange" errorStyle="color:red" showDetail="true" />
-
-		</h:form>
-
-	</div>
-
-</h:body>
-</f:view>
-</html>
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="content">
+                <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="ISSN"></h:outputText>
+                    <h:inputText id="issn" value="#{altaRevistaWeb.issn}" />
+                    <h:outputText value="#{text['nombre']}"></h:outputText>
+                    <h:inputText id="nombre" value="#{altaRevistaWeb.nombre}" />
+                    <h:outputText value="#{text['descripcion']}"></h:outputText>
+                    <h:inputTextarea value="#{altaRevistaWeb.descripcion}" rows="5"></h:inputTextarea>
+                    <h:outputText value="Fecha de fundación"></h:outputText>
+                    <h:inputText value="#{altaRevistaWeb.fechaFundacion}">
+                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                </h:panelGrid>
+                <h:commandButton value="Alta"
+                    actionListener="#{altaRevistaWeb.altaRevista()}">
+                </h:commandButton>
+                <h:messages id="errors" infoStyle="color:blue"
+                    warnStyle="color:orange" errorStyle="color:red" showDetail="true" />
+            </h:form>               
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

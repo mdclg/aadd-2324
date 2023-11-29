@@ -1,10 +1,14 @@
 package journals.servicio;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import journals.dto.RevistaDTO;
+import journals.modelo.Edicion;
 import journals.modelo.Revista;
+import journals.modelo.Tema;
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
@@ -59,9 +63,12 @@ public class ServicioJournal implements IServicioJournal {
 
 	}
 	
-	private RevistaDTO transformToDTO(Revista revista) {
-        
-        return new RevistaDTO(revista.getId(),revista.getNombre(), revista.getDescripcion(), revista.getFechaFundacion());
+	private RevistaDTO transformToDTO(Revista revista) {        
+        RevistaDTO rdto = new RevistaDTO(revista.getId(),revista.getNombre(), revista.getDescripcion(), revista.getFechaFundacion());
+        for(Edicion e:revista.getEdiciones()) {
+            rdto.addEdicion(e.getId(), e.getVolumen(), e.getFechaFinEnvios(), e.getTemas().stream().map(Tema::getTitulo).collect(Collectors.toCollection(ArrayList::new)));
+        }
+        return rdto;
     }
 
 	@Override
