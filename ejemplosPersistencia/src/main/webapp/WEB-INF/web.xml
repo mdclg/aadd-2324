@@ -34,5 +34,10 @@
 		<welcome-file>libros/crearlibro.xhtml</welcome-file>
 	</welcome-file-list>
 
+	<context-param>
+		<param-name>org.omnifaces.SOCKET_ENDPOINT_ENABLED</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
 
 </web-app>
