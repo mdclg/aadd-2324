@@ -12,8 +12,6 @@ import org.eclipse.persistence.config.QueryHints;
 import editorial.modelo.Libro;
 import utils.EntityManagerHelper;
 
-
-
 public class LibroDAO {
 
 	public static LibroDAO libro;
@@ -24,7 +22,7 @@ public class LibroDAO {
 		}
 		return libro;
 	}
-	
+
 	public Libro findById(Integer id) {
 		EntityManager em = EntityManagerHelper.getEntityManager();
 		return em.find(Libro.class, id);
@@ -52,7 +50,6 @@ public class LibroDAO {
 				em.getTransaction().rollback();
 			}
 		}
-		
 
 	}
 
@@ -60,32 +57,66 @@ public class LibroDAO {
 		EntityManager em = EntityManagerHelper.getEntityManager();
 		return em.createNamedQuery("findAllLibro", Libro.class).getResultList();
 	}
-	
-	public List<Libro> findLibrosByTitulo(String palabraClave) { 
 
-	    try {
+	public List<Libro> findLibrosByTitulo(String palabraClave) {
 
-	        String queryString = " SELECT l FROM Libro l where l.id is not null ";
+		try {
 
-	        if (palabraClave != null) {
-	            queryString += " and l.titulo like :palabraClave ";
-	        }
+			String queryString = " SELECT l FROM Libro l where l.id is not null ";
 
-	        Query query = EntityManagerHelper.getEntityManager().createQuery(queryString);
+			if (palabraClave != null) {
+				queryString += " and l.titulo like :palabraClave ";
+			}
 
-	        if (palabraClave != null) {
-	            query.setParameter("palabraClave", "%" + palabraClave + "%");
-	        }
+			Query query = EntityManagerHelper.getEntityManager().createQuery(queryString);
 
-	        query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+			if (palabraClave != null) {
+				query.setParameter("palabraClave", "%" + palabraClave + "%");
+			}
 
-	        return query.getResultList();
+			query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 
-	    } catch (RuntimeException re) {
+			return query.getResultList();
 
-	        throw re;
+		} catch (RuntimeException re) {
 
-	    }
+			throw re;
+
+		}
+
+	}
+
+	public boolean updateLibro(Libro l) {
+
+		EntityManager em = EntityManagerHelper.getEntityManager();
+
+		try {
+
+			em.getTransaction().begin();
+
+			l = em.merge(l);
+
+			em.getTransaction().commit();
+
+			return true;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			return false;
+
+		} finally {
+
+			if (em.getTransaction().isActive()) {
+
+				em.getTransaction().rollback();
+
+			}
+
+			em.close();
+
+		}
 
 	}
 
