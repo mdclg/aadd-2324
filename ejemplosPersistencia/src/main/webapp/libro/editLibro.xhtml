@@ -1,0 +1,70 @@
+<ui:composition template="/WEB-INF/template/basicTemplate.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="title">Editar libro</ui:define>
+
+	<ui:define name="content">
+		<h1>Editar libro</h1>
+		<hr />
+
+		<p:messages showDetail="true" id="errors" />
+
+
+		<h:form id="libros">
+			<h1>Lista de libros</h1>
+			<p:dataTable id="booklist" value="#{libroConstructor.libros}"
+				var="libro" border="1">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Título" />
+					</f:facet>
+					<p:link outcome="verlibro.xhtml?id=#{libro.id}"
+						value="#{libro.titulo}">
+					</p:link>
+
+				</p:column>
+
+				<p:column>
+
+					<f:facet name="header">
+
+						<h:outputText value="Precio" />
+
+					</f:facet>
+
+					<h:outputText value="#{libro.precio}" />
+
+				</p:column>
+
+				<p:column>
+
+					<f:facet name="header">
+
+						<h:outputText value="Editar" />
+
+					</f:facet>
+
+					<p:commandButton
+						actionListener="#{libroConstructor.verEditarLibro(libro.id)}"
+						value="Editar libro">
+
+						<p:ajax event="dialogReturn" update=":libros:booklist :errors" />
+
+					</p:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+
+		<hr />
+
+	</ui:define>
+
+</ui:composition>

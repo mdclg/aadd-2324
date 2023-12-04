@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<f:metadata>
+
+		<f:viewParam name="id" value="#{libroEditWeb.libroId}" />
+
+		<f:viewAction action="#{libroEditWeb.loadLibro()}" />
+
+	</f:metadata>
+
+	<h:form id="libro">
+
+		<h:panelGrid columns="2">
+
+			<h:outputLabel value="ISBN: " />
+
+			<p:inputText value="#{libroEditWeb.isbn}" />
+
+			<h:outputLabel value="Título:" />
+
+			<p:inputText value="#{libroEditWeb.titulo}" />
+
+			<h:outputLabel value="Precio: " />
+
+			<p:inputText value="#{libroEditWeb.precio}" />
+
+			<h:outputLabel value="Número de páginas: " />
+
+			<p:inputText value="#{libroEditWeb.numPaginas}" />
+
+			<h:outputLabel value="Formato: " />
+
+			<p:inputText value="#{libroEditWeb.formato}" />
+
+			<h:outputLabel value="Fecha de publicación: " />
+
+			<p:datePicker value="#{libroEditWeb.fecha}" />
+
+		</h:panelGrid>
+
+
+		<p:commandButton value="Guardar"
+			style="width: 100px; margin-right:5px"
+			actionListener="#{libroEditWeb.editarLibro()}" />
+
+		<p:commandButton value="Cerrar"
+			actionListener="#{libroEditWeb.cerrar()}" style="width: 100px" />
+
+	</h:form>
+
+</h:body>
+
+</html>

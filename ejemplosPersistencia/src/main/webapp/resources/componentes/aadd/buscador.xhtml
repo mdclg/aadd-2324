@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+
+<composite:interface>
+
+	<composite:attribute name="enlace" required="true" />
+	<composite:attribute name="titulo" required="true" />
+	<composite:attribute name="label" required="true" />
+	<composite:attribute name="beanRespaldo" required="true"
+		type="editorial.web.BuscadorWeb" />
+
+</composite:interface>
+
+
+
+<composite:implementation>
+
+
+	<h1>#{cc.attrs.titulo}</h1>
+
+	<h:panelGroup>
+
+		<p:fieldset legend="#{cc.attrs.titulo}" collapsed="false"
+			toggleable="true">
+
+			<div class="ui-g ui-fluid">
+
+				<div class="ui-g-2">Palabra clave:</div>
+
+				<div class="ui-g-10">
+
+					<p:inputText value="#{cc.attrs.beanRespaldo.keyword}" />
+
+				</div>
+
+			</div>
+
+			<div style="text-align: center;">
+
+				<p:commandButton value="Buscar"
+					actionListener="#{cc.attrs.beanRespaldo.buscar()}" update="list" />
+
+			</div>
+
+		</p:fieldset>
+
+	
+
+
+
+	<h:dataTable id="list" value="#{cc.attrs.beanRespaldo.coleccion}"
+		var="item" border="1">
+
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Nombre" />
+			</f:facet>
+
+			<h:link
+				outcome="#{cc.attrs.enlace}?id=#{cc.attrs.beanRespaldo.getIdentificador(item)}"
+				value="#{cc.attrs.beanRespaldo.getEtiqueta(item)}" />
+
+		</h:column>
+		<h:column>
+
+			<f:facet name="header">
+				<h:outputText value="Opciones" />
+			</f:facet>
+
+			<p:menuButton value="Opciones">
+				<p:menuitem value="#{cc.attrs.label}"
+					actionListener="#{cc.attrs.beanRespaldo.accion(item)}"></p:menuitem>
+			</p:menuButton>
+		</h:column>
+	</h:dataTable>
+	</h:panelGroup>
+
+
+</composite:implementation>
+
+</html>
