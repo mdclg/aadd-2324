@@ -17,6 +17,7 @@
 	<composite:attribute name="label" required="true" />
 	<composite:attribute name="beanRespaldo" required="true"
 		type="editorial.web.BuscadorWeb" />
+	<composite:editableValueHolder name="editable"></composite:editableValueHolder>
 
 </composite:interface>
 
@@ -26,6 +27,8 @@
 
 
 	<h1>#{cc.attrs.titulo}</h1>
+	
+	<h:inputText id="editable" value="#{cc.attrs.beanRespaldo.titulo}"></h:inputText>
 
 	<h:panelGroup>
 

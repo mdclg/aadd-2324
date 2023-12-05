@@ -144,6 +144,21 @@ public class LibroEditWeb implements Serializable {
 		return libro;
 	}
 	
+	public void setLibro(Libro libro) {
+		this.libro = libro;
+		
+		titulo = libro.getTitulo();
+
+		formato = libro.getFormato();
+
+		fecha = libro.getFechaPublicacion();
+
+		numPaginas = libro.getNumPaginas();
+
+		precio = libro.getPrecio();
+
+		isbn = libro.getIsbn();
+	}
 	
 
 }
