@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -26,6 +27,7 @@ public class ActiveLocale implements Serializable {
 
     private FacesContext context;
 
+    private ResourceBundle bundle;
 
     @PostConstruct
 
@@ -34,6 +36,7 @@ public class ActiveLocale implements Serializable {
         Application app = context.getApplication();
 
         actual = app.getViewHandler().calculateLocale(context);
+        bundle = ResourceBundle.getBundle("i18n.text", actual);
 
         localesDisponibles = new ArrayList<>();
 
@@ -70,6 +73,7 @@ public class ActiveLocale implements Serializable {
     public void setLanguageTag(String languageTag) {
 
         actual = Locale.forLanguageTag(languageTag);
+        bundle = ResourceBundle.getBundle("i18n.text", actual);
 
     }
 
@@ -78,4 +82,11 @@ public class ActiveLocale implements Serializable {
         return localesDisponibles;
 
     }
+
+
+	public ResourceBundle getBundle() {
+		return bundle;
+	}
+    
+    
 }

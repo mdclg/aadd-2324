@@ -1,6 +1,5 @@
 package journals.web.revista;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -13,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import journals.servicio.IServicioJournal;
+import journals.web.locale.ActiveLocale;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
 
@@ -33,24 +33,21 @@ public class AltaRevistaWeb implements Serializable {
 	@Inject
 	protected FacesContext facesContext;
 
-	protected ResourceBundle bundle;
+	@Inject
+	private ActiveLocale localeConfig;
 	
 	public AltaRevistaWeb() {
 
 		servicioJournals = FactoriaServicios.getServicio(IServicioJournal.class);
 	}
 	
-	@PostConstruct
-	public void initBundle() {
-	    bundle = ResourceBundle.getBundle("i18n.text", facesContext.getViewRoot().getLocale());
-
-	}
+	
 
 	public void altaRevista() {
 		try {
 	        String resultado = servicioJournals.crear(issn, nombre, descripcion, fechaFundacion);
 	        facesContext.addMessage(null,
-	                new FacesMessage(FacesMessage.SEVERITY_INFO, "",bundle.getString("exitoRevista")));
+	                new FacesMessage(FacesMessage.SEVERITY_INFO, "",localeConfig.getBundle().getString("exitoRevista")));
 	        /*
 	        try {
 
